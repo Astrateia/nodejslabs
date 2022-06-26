@@ -1,8 +1,9 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-eslint .
+npm run test
+npm run lint
 
+echo 'Pre-comit hook triggered'
 echo 'Checks passed'
 echo 'Pushing...'
-
