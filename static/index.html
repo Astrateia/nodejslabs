@@ -74,17 +74,17 @@
 </head>
 
 <body>
-    <form action="/account/login">
+    <form action="/account/login" method='post'>
         <h1>Log in</h1>
         <div class="icon">
             <i class="fas fa-user-circle"></i>
         </div>
         <div class="formcontainer">
             <div class="container">
-                <label for="uname"><strong>Login</strong></label>
-                <input type="text" placeholder="Enter login" name="uname" required>
-                <label for="psw"><strong>Password</strong></label>
-                <input type="password" placeholder="Enter password" name="psw" required>
+                <label for="login"><strong>Login</strong></label>
+                <input type="text" placeholder="Enter login" name="login" required>
+                <label for="password"><strong>Password</strong></label>
+                <input type="password" placeholder="Enter password" name="password" required>
             </div>
             <button type="submit"><strong>Log in</strong></button>
     </form>
