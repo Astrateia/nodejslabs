@@ -145,6 +145,7 @@ app.post('/animal/update', (req, res) => {
   const index = ANIMALS_MOCK.findIndex(({ id }) => parseInt(req.body.id) === id);
   if (index !== undefined) {
     ANIMALS_MOCK[index] = { ...ANIMALS_MOCK[index], ...req.body };
+    console.log(ANIMALS_MOCK[index]);
     console.log('Animal updated');
     res.send(JSON.stringify({ responce: 'done' }));
     res.status(200);
