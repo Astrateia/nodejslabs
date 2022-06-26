@@ -11,6 +11,10 @@ const ACCOUNTS_MOCK = [
     password: '1234'
   }
 ];
+let accountIdConstaintMock = 1;
+
+const ANIMALS_MOCK = [];
+let animalIdConstaintMock = 0;
 
 const sessions = new Map(); // map sign in cookie -> session
 
@@ -36,29 +40,54 @@ app.use(express.static('static'));
 
 // Account CRUD
 app.post('/account/get', (req, res) => {
-  console.log('Account found');
-  // res.send(JSON.stringify(account));
-  res.status(200);
+  const account = ACCOUNTS_MOCK.find(({ id }) => parseInt(req.body.id) === id);
+  if (account) {
+    console.log('Account found');
+    res.send(JSON.stringify(account));
+    res.status(200);
+  } else {
+    res.send(JSON.stringify({ responce: 'not found' }));
+    res.status(404);
+  }
   res.end();
 });
 
 app.post('/account/delete', (req, res) => {
   // Deleting account
-  console.log('Account deleted');
-  res.status(200);
+  const index = ACCOUNTS_MOCK.findIndex(({ id }) => parseInt(req.body.id) === id);
+  if (index !== undefined) {
+    ACCOUNTS_MOCK.splice(index, 1);
+    console.log('Account deleted');
+    res.send(JSON.stringify({ responce: 'done' }));
+    res.status(200);
+  } else {
+    res.send(JSON.stringify({ responce: 'not found' }));
+    res.status(404);
+  }
   res.end();
 });
 
 app.post('/account/update', (req, res) => {
   // Updating account
-  console.log('Account updated');
-  res.status(200);
+  const index = ACCOUNTS_MOCK.findIndex(({ id }) => parseInt(req.body.id) === id);
+  if (index !== undefined) {
+    ACCOUNTS_MOCK[index] = { ...ACCOUNTS_MOCK[index], ...req.body };
+    console.log('Account updated');
+    res.send(JSON.stringify({ responce: 'done' }));
+    res.status(200);
+  } else {
+    res.send(JSON.stringify({ responce: 'not found' }));
+    res.status(404);
+  }
   res.end();
 });
 
 app.post('/account/create', (req, res) => {
   // Creating account
+  accountIdConstaintMock += 1;
+  ACCOUNTS_MOCK.push({ ...req.body, id: accountIdConstaintMock });
   console.log('Account created');
+  res.send(JSON.stringify({ id: accountIdConstaintMock }));
   res.status(200);
   res.end();
 });
@@ -84,29 +113,54 @@ app.post('/account/login', (req, res) => {
 
 // Animal CRUD
 app.post('/animal/get', (req, res) => {
-  console.log('Animal found');
-  // res.send(JSON.stringify(account));
-  res.status(200);
+  const animal = ANIMALS_MOCK.find(({ id }) => parseInt(req.body.id) === id);
+  if (animal) {
+    console.log('Animal found');
+    res.send(JSON.stringify(animal));
+    res.status(200);
+  } else {
+    res.send(JSON.stringify({ responce: 'not found' }));
+    res.status(404);
+  }
   res.end();
 });
 
 app.post('/animal/delete', (req, res) => {
   // Deleting animal
-  console.log('Animal deleted');
-  res.status(200);
+  const index = ANIMALS_MOCK.findIndex(({ id }) => parseInt(req.body.id) === id);
+  if (index !== undefined) {
+    ANIMALS_MOCK.splice(index, 1);
+    console.log('Animal deleted');
+    res.send(JSON.stringify({ responce: 'done' }));
+    res.status(200);
+  } else {
+    res.send(JSON.stringify({ responce: 'not found' }));
+    res.status(404);
+  }
   res.end();
 });
 
 app.post('/animal/update', (req, res) => {
   // Updating animal
-  console.log('Animal updated');
-  res.status(200);
+  const index = ANIMALS_MOCK.findIndex(({ id }) => parseInt(req.body.id) === id);
+  if (index !== undefined) {
+    ANIMALS_MOCK[index] = { ...ANIMALS_MOCK[index], ...req.body };
+    console.log('Animal updated');
+    res.send(JSON.stringify({ responce: 'done' }));
+    res.status(200);
+  } else {
+    res.send(JSON.stringify({ responce: 'not found' }));
+    res.status(404);
+  }
   res.end();
 });
 
 app.post('/animal/create', (req, res) => {
   // Creating animal
+  animalIdConstaintMock += 1;
+  ANIMALS_MOCK.push({ ...req.body, id: animalIdConstaintMock });
   console.log('Animal created');
+  res.send(JSON.stringify({ id: animalIdConstaintMock }));
   res.status(200);
   res.end();
 });

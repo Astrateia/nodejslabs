@@ -2,10 +2,26 @@
 <html>
 
 <head>
-    <title>Restaurant Complaint Form</title>
+    <title>Home</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
         integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script>
+        function request(method, url, formId) {
+            var http = new XMLHttpRequest();
+            http.open(method, url, true);
+            http.setRequestHeader("Content-type", "application/json");
+            const formData = new FormData(document.getElementById(formId));
+            let params = {};
+            for (var pair of formData.entries()) {
+                params[pair[0]] = pair[1];
+            }
+            http.send(JSON.stringify(params));
+            http.onload = () => {
+                alert(JSON.stringify(http.responseText, null, 2));
+            }
+        }
+    </script>
     <style>
         html,
         body {
@@ -107,94 +123,110 @@
         button:hover {
             background-color: #0666a3;
         }
-
-        @media (min-width: 568px) {
-
-            .name-item,
-            .city-item {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-            }
-
-            .name-item input,
-            .city-item input {
-                width: calc(50% - 20px);
-            }
-
-            .city-item select {
-                width: calc(50% - 8px);
-            }
-        }
     </style>
 </head>
 
 <body>
     <div class="testbox">
-        <form action="/">
-            <h1>Restaurant Complaint Form</h1>
+        <form id="account-create" onsubmit="return false;">
+            <h1>Create Account</h1>
             <div class="item">
-                <p>Establishment Name</p>
-                <input type="text" name="name" />
+                <p>Login</p>
+                <input type="login" name="login" required />
             </div>
             <div class="item">
-                <p>Establishment Address</p>
-                <input type="text" name="name" placeholder="Street address" />
-                <input type="text" name="name" placeholder="Street address line 2" />
-                <div class="city-item">
-                    <input type="text" name="name" placeholder="City" />
-                    <input type="text" name="name" placeholder="Region" />
-                    <input type="text" name="name" placeholder="Postal / Zip code" />
-                    <select>
-                        <option value="">Country</option>
-                        <option value="1">Russia</option>
-                        <option value="2">Germany</option>
-                        <option value="3">France</option>
-                        <option value="4" selected>Armenia</option>
-                        <option value="5">USA</option>
-                    </select>
-                </div>
+                <p>Password</p>
+                <input type="password" name="password" required />
             </div>
+            <button onclick="request('POST', '/account/create', 'account-create')">Submit</button>
+        </form>
+        <form id="account-delete" onsubmit="return false;">
+            <h1>Delete Account</h1>
+            <div class="item">
+                <p>Account Id</p>
+                <input type="number" name="id" required />
+            </div>
+            <button onclick="request('POST', '/account/delete', 'account-delete')">Submit</button>
+        </form>
+        <form id="account-update" onsubmit="return false;">
+            <h1>Update Account</h1>
+            <div class="item">
+                <p>Account Id</p>
+                <input type="number" name="id" required />
+            </div>
+            <p>What should update</p>
+            <div class="item">
+                <p>Login</p>
+                <input type="text" name="login" />
+            </div>
+            <div class="item">
+                <p>Password</p>
+                <input type="text" name="password" />
+            </div>
+            <button onclick="request('POST', '/account/update', 'account-update')">Submit</button>
+        </form>
+        <form id="account-get" onsubmit="request('POST', '/account/get', 'account-get'); return false;">
+            <h1>Get Account</h1>
+            <div class="item">
+                <p>Account Id</p>
+                <input type="number" name="id" required />
+            </div>
+            <button>Submit</button>
+        </form>
+        <hr />
+
+        <form id="animal-create" onsubmit="return false;">
+            <h1>Create Animal</h1>
             <div class="item">
                 <p>Name</p>
-                <div class="name-item">
-                    <input type="text" name="name" placeholder="First" />
-                    <input type="text" name="name" placeholder="Last" />
-                </div>
+                <input type="text" name="name" required />
             </div>
             <div class="item">
-                <p>Daytime Phone</p>
+                <p>Type</p>
+                <select name="type" required>
+                    <option value="horse">Horse</option>
+                    <option value="dog">Dog</option>
+                    <option value="cat">Cat</option>
+                </select>
+            </div>
+            <button onclick="request('POST', '/animal/create', 'animal-create')">Submit</button>
+        </form>
+        <form id="animal-delete" onsubmit="return false;">
+            <h1>Delete Animal</h1>
+            <div class="item">
+                <p>Animal Id</p>
+                <input type="number" name="id" required />
+            </div>
+            <button onclick="request('POST', '/animal/delete', 'animal-delete')">Submit</button>
+        </form>
+        <form id="animal-update" onsubmit="return false;">
+            <h1>Update Animal</h1>
+            <div class="item">
+                <p>Animal Id</p>
+                <input type="number" name="id" required />
+            </div>
+            <p>What should update</p>
+            <div class="item">
+                <p>Name</p>
                 <input type="text" name="name" />
             </div>
             <div class="item">
-                <p>Your Address</p>
-                <input type="text" name="name" placeholder="Street address" />
-                <input type="text" name="name" placeholder="Street address line 2" />
-                <div class="city-item">
-                    <input type="text" name="name" placeholder="City" />
-                    <input type="text" name="name" placeholder="Region" />
-                    <input type="text" name="name" placeholder="Postal / Zip code" />
-                    <select>
-                        <option value="">Country</option>
-                        <option value="1">Russia</option>
-                        <option value="2">Germany</option>
-                        <option value="3">France</option>
-                        <option value="4" selected>Armenia</option>
-                        <option value="5">USA</option>
-                    </select>
-                </div>
+                <p>Type</p>
+                <select name="type">
+                    <option value="horse">Horse</option>
+                    <option value="dog">Dog</option>
+                    <option value="cat">Cat</option>
+                </select>
             </div>
+            <button onclick="request('POST', '/animal/delete', 'animal-delete')">Submit</button>
+        </form>
+        <form id="animal-get" onsubmit="return false;">
+            <h1>Get Animal</h1>
             <div class="item">
-                <p>Please Explain, including date and time in establishment</p>
-                <textarea rows="5"></textarea>
+                <p>Animal Id</p>
+                <input type="number" name="id" required />
             </div>
-            <div class="item">
-                <p>Email</p>
-                <input type="text" name="name" />
-            </div>
-            <div class="btn-block">
-                <button type="submit" href="/">SEND</button>
-            </div>
+            <button onclick="request('POST', '/animal/get', 'animal-get')">Submit</button>
         </form>
     </div>
 </body>
